@@ -1,0 +1,8 @@
+.vs/
+
+# No test results
+TestResults/
+
+# No packages, install with NuGet locally
+packages/
+

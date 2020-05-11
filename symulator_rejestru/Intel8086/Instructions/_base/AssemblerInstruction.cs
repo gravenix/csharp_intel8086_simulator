@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace symulator_rejestru.Intel8086
+namespace symulator_rejestru.Intel8086.Instructions
 {
-    interface AssemblerInstruction
+    public interface AssemblerInstruction
     {
-        void ExecuteCommand();
+        void ExecuteCommand(Processor p);
     }
 }

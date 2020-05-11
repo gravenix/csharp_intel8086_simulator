@@ -16,6 +16,7 @@ namespace symulator_rejestru
         {
             if (e.KeyCode == Keys.Enter)
             {
+                String cmd = text_input.Text;
                 processCommand(text_input.Text);
             }
         }

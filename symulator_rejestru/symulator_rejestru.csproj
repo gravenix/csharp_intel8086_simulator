@@ -51,7 +51,10 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Intel8086\Instructions\AssemblerInstruction.cs" />
+    <Compile Include="Intel8086\Instructions\MemoryItem.cs" />
+    <Compile Include="Intel8086\Instructions\MovInstruction.cs" />
+    <Compile Include="Intel8086\Instructions\_base\AssemblerInstruction.cs" />
+    <Compile Include="Intel8086\Instructions\_base\TwoParamsInstruction.cs" />
     <Compile Include="Intel8086\Processor.cs" />
     <Compile Include="Intel8086\Register.cs" />
     <Compile Include="Program.cs" />
@@ -68,6 +71,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\UnknownInstructionException.cs" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

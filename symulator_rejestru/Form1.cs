@@ -1,7 +1,5 @@
 ﻿using symulator_rejestru.Intel8086;
 using symulator_rejestru.Intel8086.Instructions;
-using System;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace symulator_rejestru

@@ -52,13 +52,13 @@ namespace symulator_rejestru.Intel8086
                 switch (reg.ToCharArray()[0])
                 {
                     case 'X':
-                        SetRegister(index, LEVEL.LOW, (ushort) val);
+                        SetRegister(index, LEVEL.LOW, (ushort)val);
                         break;
                     case 'H':
-                        SetRegister(index, LEVEL.LOW, LEVEL.HIGH, (byte) val);
+                        SetRegister(index, LEVEL.LOW, LEVEL.HIGH, (byte)val);
                         break;
                     case 'L':
-                        SetRegister(index, LEVEL.LOW, LEVEL.LOW, (byte) val);
+                        SetRegister(index, LEVEL.LOW, LEVEL.LOW, (byte)val);
                         break;
                 }
             }

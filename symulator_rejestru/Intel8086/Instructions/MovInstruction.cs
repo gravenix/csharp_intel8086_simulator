@@ -5,43 +5,40 @@ namespace symulator_rejestru.Intel8086.Instructions
 {
     public class MovInstruction : TwoParamsInstruction<Object>
     {
-        private MemoryItem mDest;
-        private MemoryItem mSrc;
-
         private MovInstruction(MemoryItem dest, MemoryItem src)
         {
-            mDest = dest;
-            mSrc = src;
+            param1 = dest;
+            param2 = src;
         }
 
         public override void ExecuteCommand(Processor processor)
         {
-            if (mSrc.value == null)
+            if (GetSrc().value == null)
             {
-                if (mSrc.level2 != null)
+                if (GetSrc().level2 != null)
                 {
-                    mSrc.value = processor.GetRegister().GetRegister((Register.REGISTERS)mSrc.register, (Register.LEVEL)mSrc.level1, (Register.LEVEL)mSrc.level2);
+                    GetSrc().value = processor.GetRegister().GetRegister((Register.REGISTERS)GetSrc().register, (Register.LEVEL)GetSrc().level1, (Register.LEVEL)GetSrc().level2);
                 }
-                else if (mSrc.level1 != null)
+                else if (GetSrc().level1 != null)
                 {
-                    mSrc.value = processor.GetRegister().GetRegister((Register.REGISTERS)mSrc.register, (Register.LEVEL)mSrc.level1);
+                    GetSrc().value = processor.GetRegister().GetRegister((Register.REGISTERS)GetSrc().register, (Register.LEVEL)GetSrc().level1);
                 }
-                else if (mSrc.register != null)
+                else if (GetSrc().register != null)
                 {
-                    mSrc.value = (int)processor.GetRegister().GetRegister((Register.REGISTERS)mSrc.register);
+                    GetSrc().value = (int)processor.GetRegister().GetRegister((Register.REGISTERS)GetSrc().register);
                 }
             }
-            if (mDest.level1 == null)
+            if (GetDest().level1 == null)
             {
-                processor.GetRegister().SetRegister( (Register.REGISTERS) mDest.register, (uint)mSrc.value);
+                processor.GetRegister().SetRegister((Register.REGISTERS)GetDest().register, (uint)GetSrc().value);
             }
-            else if (mDest.level2 == null)
+            else if (GetDest().level2 == null)
             {
-                processor.GetRegister().SetRegister((Register.REGISTERS)mDest.register, (Register.LEVEL)mDest.level1, (ushort)mSrc.value);
+                processor.GetRegister().SetRegister((Register.REGISTERS)GetDest().register, (Register.LEVEL)GetDest().level1, (ushort)GetSrc().value);
             }
             else
             {
-                processor.GetRegister().SetRegister((Register.REGISTERS)mDest.register, (Register.LEVEL)mDest.level1, (Register.LEVEL)mDest.level2, (byte)mSrc.value);
+                processor.GetRegister().SetRegister((Register.REGISTERS)GetDest().register, (Register.LEVEL)GetDest().level1, (Register.LEVEL)GetDest().level2, (byte)GetSrc().value);
             }
         }
 
@@ -136,6 +133,16 @@ namespace symulator_rejestru.Intel8086.Instructions
                 }
                 return mem;
             }
+        }
+
+        private MemoryItem GetDest()
+        {
+            return (MemoryItem)param1;
+        }
+
+        private MemoryItem GetSrc()
+        {
+            return (MemoryItem)param2;
         }
     }
 }

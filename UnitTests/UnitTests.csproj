@@ -57,9 +57,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\symulator_rejestru\symulator_rejestru.csproj">
+    <ProjectReference Include="..\symulator_rejestru\Intel8086Simulator.csproj">
       <Project>{9cecd800-b500-4a70-b55c-5afe2b2ff684}</Project>
-      <Name>symulator_rejestru</Name>
+      <Name>Intel8086Simulator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

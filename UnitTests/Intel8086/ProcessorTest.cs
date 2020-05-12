@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using symulator_rejestru.Intel8086;
 using symulator_rejestru.Intel8086.Instructions;
+using System;
 
 namespace UnitTests.Intel8086
 {

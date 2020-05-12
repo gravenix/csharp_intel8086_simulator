@@ -1,9 +1,5 @@
 ﻿using symulator_rejestru.Exceptions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace symulator_rejestru.Intel8086.Instructions
 {
@@ -20,7 +16,7 @@ namespace symulator_rejestru.Intel8086.Instructions
 
         public override void ExecuteCommand(Processor processor)
         {
-            if(mSrc.value == null)
+            if (mSrc.value == null)
             {
                 if (mSrc.level2 != null)
                 {
@@ -30,18 +26,20 @@ namespace symulator_rejestru.Intel8086.Instructions
                 {
                     mSrc.value = processor.GetRegister().GetRegister((Register.REGISTERS)mSrc.register, (Register.LEVEL)mSrc.level1);
                 }
-                else if(mSrc.register != null)
+                else if (mSrc.register != null)
                 {
                     mSrc.value = (int)processor.GetRegister().GetRegister((Register.REGISTERS)mSrc.register);
                 }
             }
-            if (mDest.level1 == null) {
-                processor.GetRegister().SetRegister((Register.REGISTERS)mDest.register, (uint)mSrc.value);
-            } 
-            else if(mDest.level2 == null)
+            if (mDest.level1 == null)
+            {
+                processor.GetRegister().SetRegister( (Register.REGISTERS) mDest.register, (uint)mSrc.value);
+            }
+            else if (mDest.level2 == null)
             {
                 processor.GetRegister().SetRegister((Register.REGISTERS)mDest.register, (Register.LEVEL)mDest.level1, (ushort)mSrc.value);
-            } else
+            }
+            else
             {
                 processor.GetRegister().SetRegister((Register.REGISTERS)mDest.register, (Register.LEVEL)mDest.level1, (Register.LEVEL)mDest.level2, (byte)mSrc.value);
             }
@@ -97,7 +95,7 @@ namespace symulator_rejestru.Intel8086.Instructions
                     {
                         this.src.level2 = Register.LEVEL.LOW;
                     }
-                    else if (src.ToCharArray()[1] == 'h') 
+                    else if (src.ToCharArray()[1] == 'h')
                     {
                         this.src.level2 = Register.LEVEL.HIGH;
                     }

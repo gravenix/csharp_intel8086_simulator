@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace symulator_rejestru.Intel8086
 {
@@ -18,6 +14,54 @@ namespace symulator_rejestru.Intel8086
         public Register()
         {
             eax = ebx = ecx = edx = 0;
+        }
+
+        public UInt32 GetRegister(String reg)
+        {
+            reg = reg.ToUpper();
+            if (reg.Length == 3)
+            {
+                return GetRegister((REGISTERS)Enum.Parse(typeof(REGISTERS), reg.ToCharArray()[1].ToString()));
+            }
+            else if (reg.Length == 2)
+            {
+                REGISTERS index = (REGISTERS)Enum.Parse(typeof(REGISTERS), reg.ToCharArray()[0].ToString());
+                switch (reg.ToCharArray()[1])
+                {
+                    case 'X':
+                        return GetRegister(index, LEVEL.LOW);
+                    case 'H':
+                        return GetRegister(index, LEVEL.LOW, LEVEL.HIGH);
+                    case 'L':
+                        return GetRegister(index, LEVEL.LOW, LEVEL.LOW);
+                }
+            }
+            return 0;
+        }
+
+        public void SetRegister(String reg, UInt32 val)
+        {
+            reg = reg.ToUpper();
+            if (reg.Length == 3)
+            {
+                SetRegister((REGISTERS)Enum.Parse(typeof(REGISTERS), reg.ToCharArray()[1].ToString()), val);
+            }
+            else if (reg.Length == 2)
+            {
+                REGISTERS index = (REGISTERS)Enum.Parse(typeof(REGISTERS), reg.ToCharArray()[0].ToString());
+                switch (reg.ToCharArray()[0])
+                {
+                    case 'X':
+                        SetRegister(index, LEVEL.LOW, (ushort) val);
+                        break;
+                    case 'H':
+                        SetRegister(index, LEVEL.LOW, LEVEL.HIGH, (byte) val);
+                        break;
+                    case 'L':
+                        SetRegister(index, LEVEL.LOW, LEVEL.LOW, (byte) val);
+                        break;
+                }
+            }
         }
 
         public void SetRegister(REGISTERS type, UInt32 value)
@@ -93,7 +137,7 @@ namespace symulator_rejestru.Intel8086
             switch (level)
             {
                 case LEVEL.HIGH:
-                    reg = reg >> 16;
+                    reg >>= 16;
                     break;
                 case LEVEL.LOW:
                     reg = reg << 16 >> 16;
@@ -111,7 +155,7 @@ namespace symulator_rejestru.Intel8086
                     reg = (UInt16)(reg >> 8);
                     break;
                 case LEVEL.LOW:
-                    reg = (UInt16)((UInt16) reg << 8>> 8);
+                    reg = (UInt16)((UInt16)reg << 8 >> 8);
                     break;
             }
             return (Byte)reg;

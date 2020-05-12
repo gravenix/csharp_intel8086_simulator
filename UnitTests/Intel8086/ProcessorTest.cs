@@ -28,6 +28,18 @@ namespace UnitTests.Intel8086
             cmd = Processor.ParseInstruction("MOV DH, 11");
             p.ExecuteCommand(cmd);
             Assert.AreEqual((UInt32)11, p.GetRegister().GetRegister(Register.REGISTERS.D, Register.LEVEL.LOW, Register.LEVEL.HIGH));
+
+            cmd = Processor.ParseInstruction("MOV DL, DH");
+            p.ExecuteCommand(cmd);
+            Assert.AreEqual((UInt32)11, p.GetRegister().GetRegister(Register.REGISTERS.D, Register.LEVEL.LOW, Register.LEVEL.LOW));
+
+            cmd = Processor.ParseInstruction("MOV EAX, DH");
+            p.ExecuteCommand(cmd);
+            Assert.AreEqual((UInt32)11, p.GetRegister().GetRegister(Register.REGISTERS.A));
+
+            cmd = Processor.ParseInstruction("  MOV ECX, 111 "); //spaces
+            p.ExecuteCommand(cmd);
+            Assert.AreEqual((UInt32)111, p.GetRegister().GetRegister(Register.REGISTERS.C));
         }
     }
 }

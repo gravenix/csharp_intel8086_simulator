@@ -20,6 +20,21 @@ namespace symulator_rejestru.Intel8086.Instructions
 
         public override void ExecuteCommand(Processor processor)
         {
+            if(mSrc.value == null)
+            {
+                if (mSrc.level2 != null)
+                {
+                    mSrc.value = processor.GetRegister().GetRegister((Register.REGISTERS)mSrc.register, (Register.LEVEL)mSrc.level1, (Register.LEVEL)mSrc.level2);
+                }
+                else if (mSrc.level1 != null)
+                {
+                    mSrc.value = processor.GetRegister().GetRegister((Register.REGISTERS)mSrc.register, (Register.LEVEL)mSrc.level1);
+                }
+                else if(mSrc.register != null)
+                {
+                    mSrc.value = (int)processor.GetRegister().GetRegister((Register.REGISTERS)mSrc.register);
+                }
+            }
             if (mDest.level1 == null) {
                 processor.GetRegister().SetRegister((Register.REGISTERS)mDest.register, (uint)mSrc.value);
             } 
@@ -46,11 +61,11 @@ namespace symulator_rejestru.Intel8086.Instructions
             {
                 if (dest.Length == 3)
                 {
-                    SetRegister(dest.ToCharArray()[1]);
+                    SetRegister(dest.ToCharArray()[1], this.dest);
                 }
                 else if (dest.Length == 2)
                 {
-                    SetRegister(dest.ToCharArray()[0]);
+                    SetRegister(dest.ToCharArray()[0], this.dest);
                     this.dest.level1 = Register.LEVEL.LOW;
                     if (dest.ToCharArray()[1] == 'l')
                     {
@@ -76,7 +91,7 @@ namespace symulator_rejestru.Intel8086.Instructions
                 }
                 else if (src.Length == 2)
                 {
-                    SetRegister(src.ToCharArray()[0]);
+                    SetRegister(src.ToCharArray()[0], this.src);
                     this.src.level1 = Register.LEVEL.LOW;
                     if (src.ToCharArray()[1] == 'l')
                     {
@@ -89,7 +104,7 @@ namespace symulator_rejestru.Intel8086.Instructions
                 }
                 else if (src.Length == 3)
                 {
-                    SetRegister(src.ToCharArray()[1]);
+                    SetRegister(src.ToCharArray()[1], this.src);
                 }
                 else
                 {
@@ -104,23 +119,24 @@ namespace symulator_rejestru.Intel8086.Instructions
                 return new MovInstruction(dest, src);
             }
 
-            private void SetRegister(char letter)
+            private MemoryItem SetRegister(char letter, MemoryItem mem)
             {
                 switch (letter)
                 {
                     case 'a':
-                        dest.register = Register.REGISTERS.A;
+                        mem.register = Register.REGISTERS.A;
                         break;
                     case 'b':
-                        dest.register = Register.REGISTERS.B;
+                        mem.register = Register.REGISTERS.B;
                         break;
                     case 'c':
-                        dest.register = Register.REGISTERS.C;
+                        mem.register = Register.REGISTERS.C;
                         break;
                     case 'd':
-                        dest.register = Register.REGISTERS.D;
+                        mem.register = Register.REGISTERS.D;
                         break;
                 }
+                return mem;
             }
         }
     }
